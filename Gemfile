@@ -8,5 +8,5 @@ gem 'slim'
 gem 'http'
 
 group :development do
-	gem 'rerun'
+    gem 'rerun'
 end
