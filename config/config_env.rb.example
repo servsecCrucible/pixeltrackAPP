@@ -1,0 +1,5 @@
+# Copy this file to [app]/config/congig_env.rb
+
+config_env :development, :test do
+  set 'HOST', "domainname/api/v1"
+end

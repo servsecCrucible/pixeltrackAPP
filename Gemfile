@@ -10,3 +10,7 @@ gem 'http'
 group :development do
     gem 'rerun'
 end
+
+group :development, :test do
+    gem 'config_env'
+end
