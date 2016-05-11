@@ -1,5 +1,11 @@
 # Copy this file to [app]/config/congig_env.rb
 
 config_env :development, :test do
-  set 'HOST', "domainname/api/v1"
+  set 'API_HOST', 'http://localhost:9292/api/v1/'
+  set 'APP_HOST', 'http://localhost:9393'
+end
+
+config_env :production do
+  set 'API_HOST', 'http://[apidomainname]/api/v1/'
+  set 'APP_HOST', 'http://[appdomainname]'
 end
