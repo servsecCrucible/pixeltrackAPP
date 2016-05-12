@@ -1,8 +1,10 @@
-# Copy this file to [app]/config/congig_env.rb
+# Copy this file to [app]/config/config_env.rb
+# This app runs on 9393, see config.ru
+# The API runs on 9292 by default, ensure that there are no port conflicts 
 
 config_env :development, :test do
-  set 'API_HOST', 'http://localhost:9393/api/v1/'
-  set 'APP_HOST', 'http://localhost:9393'
+  set 'API_HOST', 'http://localhost:9292/api/v1/'
+  set 'APP_HOST', 'http://localhost:9292'
 end
 
 config_env :production do
