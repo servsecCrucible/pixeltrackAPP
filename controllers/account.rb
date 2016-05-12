@@ -29,9 +29,9 @@ class PixelTrackApp < Sinatra::Base
 
     get '/account/:username' do
         if @current_account && @current_account['username'] == params[:username]
-            slim[:account]
+            slim :account
         else
-            slim[:login]
+            slim :login
         end
     end
 end
