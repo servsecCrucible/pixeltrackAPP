@@ -1,1 +1,2 @@
 require_relative 'find_authenticated_account'
+require_relative 'create_verified_account'
