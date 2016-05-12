@@ -15,3 +15,9 @@ config_env :production do
   set 'API_HOST', 'http://[apidomainname]/api/v1/'
   set 'APP_HOST', 'http://[appdomainname]'
 end
+
+config_env do
+  set 'SENDGRID_DOMAIN', 'heroku.com'
+  set 'SENDGRID_USERNAME', '...'
+  set 'SENDGRID_PASSWORD', '...'
+end

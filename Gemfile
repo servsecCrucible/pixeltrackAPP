@@ -5,7 +5,7 @@ gem 'sinatra'
 gem 'thin'
 gem 'slim'
 gem 'http'
-
+gem 'pony'
 gem 'jose'
 gem 'rbnacl-libsodium'
 
