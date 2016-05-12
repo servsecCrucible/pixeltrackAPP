@@ -1,5 +1,4 @@
 require 'base64'
-require 'rbnacl/libsodium'
 require 'jose'
 
 # Utility class to encrypt and decrypt message from this application

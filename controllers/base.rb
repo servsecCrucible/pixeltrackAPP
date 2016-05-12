@@ -2,10 +2,8 @@ require 'sinatra'
 
 # Base class for PixelTrack web application
 class PixelTrackApp < Sinatra::Base
-    use Rack::Session::Cookie,  expire_after: 2_592_000,
-                                coder: CookieEncoder.new,
-                                let_coder_handle_secure_encoding: true
-
+    enable :logging
+    use Rack::Session::Cookie, secret: ENV['MSG_KEY']
     set :views, File.expand_path('../../views', __FILE__)
 
     before do
