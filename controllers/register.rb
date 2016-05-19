@@ -8,7 +8,7 @@ class PixelTrackApp < Sinatra::Base
     post '/register/?' do
         registration = Registration.call(params)
         if registration.failure?
-            puts 'Please enter a valid username and email'
+            flash[:error] = 'Please enter a valid username and email'
             redirect '/register'
             halt
         end
@@ -17,6 +17,8 @@ class PixelTrackApp < Sinatra::Base
             redirect '/'
         rescue => e
             logger.error "FAIL EMAIL: #{e}"
+            flash[:error] = 'Unable to send email verification -- please '\
+                      'check you have entered the right address'
             redirect '/register'
         end
     end
@@ -31,6 +33,7 @@ class PixelTrackApp < Sinatra::Base
     post '/register/:token_secure/verify' do
         password = Passwords.call(params)
         if passwords.failure?
+            flash[:error] = passwords.messages.values.join('; ')
             redirect "/register/#{params[:token_secure]}/verify"
             halt
         end
