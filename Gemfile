@@ -9,6 +9,7 @@ gem 'pony'
 gem 'jose'
 gem 'dry-validation'
 gem 'rbnacl-libsodium'
+gem 'rack-flash3'
 
 group :development do
     gem 'rerun'
