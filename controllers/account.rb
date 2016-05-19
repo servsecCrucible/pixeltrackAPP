@@ -7,15 +7,17 @@ class PixelTrackApp < Sinatra::Base
     end
 
     post '/login/?' do
-        username = params[:username]
-        password = params[:password]
+        credentials = LoginCredentials.call(params)
+        if credentials.failure?
+            redirect '/login'
+            halt
+        end
 
-        @current_account = FindAuthenticatedAccount.call(
-            username: username, password: password)
+        @current_account = FindAuthenticatedAccount.call(credentials)
 
         if @current_account
-            session[:current_account] = @current_account
-            slim :home
+            session[:current_account] = SecureMessage.encrypt(@current_account)
+            redirect '/'
         else
             slim :login
         end

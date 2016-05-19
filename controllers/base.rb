@@ -7,7 +7,9 @@ class PixelTrackApp < Sinatra::Base
     set :views, File.expand_path('../../views', __FILE__)
 
     before do
-        @current_account = session[:current_account]
+        if session[:current_account]
+            @current_account = SecureMessage.decrypt(session[:current_account])
+        end
     end
 
     get '/' do

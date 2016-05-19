@@ -7,6 +7,7 @@ gem 'slim'
 gem 'http'
 gem 'pony'
 gem 'jose'
+gem 'dry-validation'
 gem 'rbnacl-libsodium'
 
 group :development do

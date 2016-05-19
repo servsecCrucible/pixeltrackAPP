@@ -1,42 +1,47 @@
 require 'sinatra'
 
 class PixelTrackApp < Sinatra::Base
-  get '/register/?' do
-    slim :register
-  end
-
-  post '/register/?' do
-    begin
-      EmailRegistrationVerification.call(
-        username: params[:username],
-        email: params[:email])
-      redirect '/'
-    rescue => e
-      puts "FAIL EMAIL: #{e}"
-      redirect '/register'
+    get '/register/?' do
+        slim :register
     end
-  end
 
-  get '/register/:token_secure/verify' do
-    @token_secure = params[:token_secure]
-    @new_account = SecureMessage.decrypt(@token_secure)
+    post '/register/?' do
+        registration = Registration.call(params)
+        if registration.failure?
+            puts 'Please enter a valid username and email'
+            redirect '/register'
+            halt
+        end
+        begin
+            EmailRegistrationVerification.call(registration)
+            redirect '/'
+        rescue => e
+            logger.error "FAIL EMAIL: #{e}"
+            redirect '/register'
+        end
+    end
 
-    slim :register_confirm
-  end
+    get '/register/:token_secure/verify' do
+        @token_secure = params[:token_secure]
+        @new_account = SecureMessage.decrypt(@token_secure)
 
-  post '/register/:token_secure/verify' do
-    redirect "/register/#{params[:token_secure]}/verify" unless
-      (params[:password] == params[:password_confirm]) &&
-      !params[:password].empty?
+        slim :register_confirm
+    end
 
-    new_account = SecureMessage.decrypt(params[:token_secure])
+    post '/register/:token_secure/verify' do
+        password = Passwords.call(params)
+        if passwords.failure?
+            redirect "/register/#{params[:token_secure]}/verify"
+            halt
+        end
 
-    result = CreateVerifiedAccount.call(
-      username: new_account['username'],
-      email: new_account['email'],
-      password: params['password'])
-
-    puts "RESULT: #{result}"
-    result ? redirect('/login') : redirect('/register')
-  end
+        new_account = SecureMessage.decrypt(params[:token_secure])
+        result = CreateVerifiedAccount.call(
+            username: new_account['username'],
+            email: new_account['email'],
+            password: params['password']
+        )
+        puts "RESULT: #{result}"
+        result ? redirect('/login') : redirect('/register')
+    end
 end
