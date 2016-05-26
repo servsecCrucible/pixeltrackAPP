@@ -1,0 +1,10 @@
+h1 Campaigns
+table class="table"
+  thead
+    tr
+      th Campaign label
+  tbody
+    - @campaigns.each do |camp|
+      tr
+        td
+          a href="/accounts/#{@current_account['username']}/campaigns/#{camp[:id]}" #{camp[:label]}

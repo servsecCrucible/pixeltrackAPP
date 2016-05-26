@@ -1,0 +1,18 @@
+h1
+  == "#{@campaign[:label]}"
+
+table class="table"
+  tr
+    td Project Repository:
+    td #{@campaign[:label]}
+
+table class="table"
+  thead
+    tr
+      th Tracker
+      th Url
+  tbody
+    - @campaign[:tracker_set].each do |tracker|
+      tr
+        td #{tracker[:label]}
+        td #{tracker[:url]}
