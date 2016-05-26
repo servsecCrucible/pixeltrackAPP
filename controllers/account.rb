@@ -2,6 +2,15 @@ require 'sinatra'
 
 # Base class for PixelTrack web application
 class PixelTrackApp < Sinatra::Base
+    get '/account/:username' do
+        if @current_account && @current_account['username'] == params[:username]
+            @auth_token = session[:auth_token]
+            slim :account
+        else
+            slim :login
+        end
+    end
+
     get '/login/?' do
         slim :login
     end
@@ -14,9 +23,11 @@ class PixelTrackApp < Sinatra::Base
             halt
         end
 
-        @current_account = FindAuthenticatedAccount.call(credentials)
+        auth_account = FindAuthenticatedAccount.call(credentials)
 
-        if @current_account
+        if auth_account
+            @current_account = auth_account['account']
+            session[:auth_token] = auth_account['auth_token']
             session[:current_account] = SecureMessage.encrypt(@current_account)
             flash[:notice] = "Welcome back #{@current_account['username']}"
             redirect '/'
@@ -31,13 +42,5 @@ class PixelTrackApp < Sinatra::Base
         session[:current_account] = nil
         flash[:notice] = 'You have logged out - please login again to use this site'
         slim :login
-    end
-
-    get '/account/:username' do
-        if @current_account && @current_account['username'] == params[:username]
-            slim :account
-        else
-            slim :login
-        end
     end
 end
