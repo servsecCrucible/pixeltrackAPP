@@ -7,7 +7,7 @@ class PixelTrackApp < Sinatra::Base
                                               auth_token: session[:auth_token])
         end
 
-        @campaigns ? slim(:all_campaigns) : redirect ('/login')
+        @campaigns ? slim(:all_campaigns) : redirect('/login')
     end
 
     get '/accounts/:username/campaigns/:campaign_id' do
