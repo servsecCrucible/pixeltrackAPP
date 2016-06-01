@@ -18,8 +18,8 @@ class GetCampaignDetails
     tracker_set = trackers.map do |tracker|
       {
         id: tracker['id'],
-        label: tracker['data']['label'],
-        url: tracker['data']['url']
+        label: tracker['attributes']['label'],
+        url: tracker['attributes']['url']
       }
     end
 

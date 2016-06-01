@@ -5,7 +5,7 @@ require 'http'
 class GetAllCampaigns
   def self.call(current_account:, auth_token:)
     response = HTTP.auth("Bearer #{auth_token}")
-                   .get("#{ENV['API_HOST']}/accounts/#{current_account['id']}/campaigns")
+                   .get("#{ENV['API_HOST']}/accounts/#{current_account['username']}/campaigns")
     response.code == 200 ? extract_campaigns(response.parse) : nil
   end
 
