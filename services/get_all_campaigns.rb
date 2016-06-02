@@ -9,7 +9,7 @@ class GetAllCampaigns
     response.code == 200 ? extract_campaigns(response.parse) : nil
   end
 
-  private
+  private_class_method
 
   def self.extract_campaigns(campaigns)
     campaigns['data'].map do |camp|

@@ -9,7 +9,7 @@ class GetCampaignDetails
     response.code == 200 ? extract_campaign_details(response.parse) : nil
   end
 
-  private
+  private_class_method
 
   def self.extract_campaign_details(campaign_data)
     campaign = campaign_data['data']
