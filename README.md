@@ -14,7 +14,8 @@ for development and production.
 
     $ touch config_env.rb
     $ gedit config_env.rb
-    $ rake key:generate (Generate MSG_KEY)
+    $ rake key:symmetric:generate (Generate MSG_KEY)
+    $ rake key:asymmetric:generate (Generate PGP Pair)
 
     Edit config_env.rb file according to config_env.rb.example
 
