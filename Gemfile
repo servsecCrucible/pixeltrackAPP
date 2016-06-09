@@ -13,9 +13,9 @@ gem 'rack-ssl-enforcer'
 gem 'rack-flash3'
 
 group :development do
-    gem 'rerun'
+  gem 'rerun'
 end
 
 group :development, :test do
-    gem 'config_env'
+  gem 'config_env'
 end

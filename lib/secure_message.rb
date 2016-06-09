@@ -6,6 +6,13 @@ require 'jose'
 # - requires: ENV['MSG_KEY']
 
 class SecureMessage
+
+  def self.sign(message_object)
+    app_secret_key = JOSE::JWK.from_okp(
+      [:Ed25519, Base64.decode64(ENV['APP_SECRET_KEY'])])
+    app_secret_key.sign(message_object.to_json).compact
+  end
+
   def self.msg_key
     Base64.strict_decode64(ENV['MSG_KEY'])
   end
