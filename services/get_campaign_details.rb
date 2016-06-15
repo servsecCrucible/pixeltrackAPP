@@ -34,6 +34,7 @@ class GetCampaignDetails
 
     { id: campaign['id'],
       label: campaign['attributes']['label'],
+      nb_visits: campaign['attributes']['nb_visits'],
       tracker_set: tracker_set,
       contributor_set: contributor_set
     }

@@ -14,7 +14,8 @@ class GetAllCampaigns
   def self.extract_campaigns(campaigns)
     campaigns['data'].map do |camp|
       { id: camp['id'],
-        label: camp['attributes']['label']}
+        label: camp['attributes']['label'],
+        nb_visits: camp['attributes']['nb_visits']}
     end
   end
 end

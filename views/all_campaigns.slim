@@ -4,12 +4,16 @@ row
       button type="button" class="btn btn-success" data-toggle="modal" data-target="#newCampaignModal" New Campaign
 
 row
-  - @campaigns.each do |camp|
-    div class="panel panel-default"
-      div class="panel-heading"
-        h3 class="panel-title"
-          a href="/accounts/#{@current_account['username']}/campaigns/#{camp[:id]}" #{camp[:label]}
-      div class="panel-body"
-        p We can add some figure here
+  table class="table table-hover table-striped"
+    thead
+      tr
+        th Label
+        th Views
+    tbody
+      - @campaigns.each do |camp|
+        tr
+          td
+            a href="/accounts/#{@current_account['username']}/campaigns/#{camp[:id]}" #{camp[:label]}
+          td #{camp[:nb_visits]}
 
 include :campaign_new_partial
