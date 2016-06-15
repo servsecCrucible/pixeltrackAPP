@@ -44,7 +44,30 @@ class PixelTrackApp < Sinatra::Base
       rescue => e
         flash[:error] = 'Something went wrong -- we will look into it!'
         logger.error "NEW_CAMPAIGN FAIL: #{e}"
-        redirect "/accounts/#{@current_account['username']}/campaigns"
+        redirect campaigns_url
+      end
+    end
+  end
+
+  post '/accounts/:username/campaigns/:campaign_id/trackers?' do
+    halt_if_incorrect_user(params)
+
+    new_tracker_data = NewTracker.call(params)
+    if new_tracker_data.failure?
+      flash[:error] = new_tracker_data.messages.values.join('; ')
+      redirect back
+    else
+      begin
+        new_tracker = CreateNewTracker.call(
+          auth_token: session[:auth_token],
+          campaign_id: params[:campaign_id],
+          new_tracker: new_tracker_data.to_h)
+        flash[:notice] = 'Your new tracker has been created! '
+        redirect back
+      rescue => e
+        flash[:error] = 'Something went wrong -- we will look into it!'
+        logger.error "NEW_TRACKER FAIL: #{e}"
+        redirect back
       end
     end
   end
