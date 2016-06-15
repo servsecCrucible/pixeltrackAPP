@@ -34,18 +34,12 @@ class PixelTrackApp < Sinatra::Base
       redirect campaigns_url
     else
       begin
-        logger.info "1"
-        logger.info session[:auth_token]
-        logger.info @current_account
-        logger.info new_campaign_data.to_h
         new_campaign = CreateNewCampaign.call(
           auth_token: session[:auth_token],
           owner: @current_account,
           new_campaign: new_campaign_data.to_h)
-        logger.info "2"
         flash[:notice] = 'Your new campaign has been created! '\
                          ' Now add configurations and invite collaborators.'
-        logger.info "3"
         redirect campaigns_url + "/#{new_campaign['id']}"
       rescue => e
         flash[:error] = 'Something went wrong -- we will look into it!'
@@ -53,5 +47,23 @@ class PixelTrackApp < Sinatra::Base
         redirect "/accounts/#{@current_account['username']}/campaigns"
       end
     end
+  end
+
+  post '/accounts/:username/campaigns/:campaign_id/contributors/?' do
+    halt_if_incorrect_user(params)
+
+    contributor = AddContributorToCampaign.call(
+      contributor_email: params[:email],
+      campaign_id: params[:campaign_id],
+      auth_token: session[:auth_token])
+
+    if contributor
+      account_info = "#{contributor['username']} (#{contributor['email']})"
+      flash[:notice] = "Added #{account_info} to the campaign"
+    else
+      flash[:error] = "Could not add #{params['email']} to the campaign"
+    end
+
+    redirect back
   end
 end

@@ -13,7 +13,8 @@ class GetCampaignDetails
 
   def self.extract_campaign_details(campaign_data)
     campaign = campaign_data['data']
-    trackers = campaign_data['relationships']
+    trackers = campaign_data['trackers']
+    contributors = campaign_data['contributors']
 
     tracker_set = trackers.map do |tracker|
       {
@@ -23,8 +24,18 @@ class GetCampaignDetails
       }
     end
 
+    contributor_set = contributors.map do |contributor|
+      {
+        id: contributor['id'],
+        username: contributor['username'],
+        email: contributor['email']
+      }
+    end
+
     { id: campaign['id'],
       label: campaign['attributes']['label'],
-      tracker_set: tracker_set }
+      tracker_set: tracker_set,
+      contributor_set: contributor_set
+    }
   end
 end
