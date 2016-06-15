@@ -4,6 +4,16 @@ div id="addContributorModal" class="modal fade" role="dialog"
       div class="modal-header"
         h4 Add Contributor
       div class="modal-body"
+        table class="table"
+          thead
+            tr
+              th Contributor
+              th Email
+          tbody
+            - @campaign[:contributor_set].each do |contributor|
+              tr
+                td #{contributor[:username]}
+                td #{contributor[:email]}
         form role="form" action="/accounts/#{@current_account['username']}/campaigns/#{@campaign[:id]}/contributors" method='post' id='new-project-form'
           div class="form-group"
             label for='email_input' Email address:

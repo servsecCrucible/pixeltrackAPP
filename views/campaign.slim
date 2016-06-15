@@ -1,38 +1,21 @@
-div class="row" style="vertical-align: bottom;"
-  div class="col-xs-9"
+row
+  .jumbotron
     h3
       == "#{@campaign[:label]}"
+    div class="btn-toolbar"
+      a role="button" class="btn btn-success" data-toggle="modal" data-target="#newTrackerModal" Add Tracker
+      a role="button" class="btn btn-info" data-toggle="modal" data-target="#addContributorModal" Contributors
 
-table class="table"
-  tr
-    td Project Repository:
-    td #{@campaign[:label]}
-
-table class="table"
-  thead
-    tr
-      th Tracker
-      th Url
-  tbody
-    - @campaign[:tracker_set].each do |tracker|
-      tr
-        td #{tracker[:label]}
-        td #{tracker[:url]}
-div class="col-xs-3"
-  button type="button" class="btn btn-success" data-toggle="modal" data-target="#newTrackerModal" + Add Tracker
-
-table class="table"
-  thead
-    tr
-      th Contributor
-      th Email
-  tbody
-    - @campaign[:contributor_set].each do |contributor|
-      tr
-        td #{contributor[:username]}
-        td #{contributor[:email]}
-div class="col-xs-3"
-  button type="button" class="btn btn-success" data-toggle="modal" data-target="#addContributorModal" + Add Contributor
+row
+  - @campaign[:tracker_set].each do |tracker|
+    div class="panel panel-default"
+      div class="panel-heading"
+        h3 class="panel-title"
+          == "#{tracker[:label]}"
+      div class="panel-body"
+        p We can add some chart here
+      div class="panel-footer"
+        == "#{tracker[:url]}"
 
 include :contributor_new_partial
 include :tracker_new_partial
