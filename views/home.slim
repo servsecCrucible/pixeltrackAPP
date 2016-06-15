@@ -1,4 +1,7 @@
 .jumbotron
 	h1 Welcome to the World's Greatest PixelTracker
 	p This site allows you to collect and analyse statistics about the number of users that visit particular pages in order to understand issues and make operational changes.
-	a class="btn btn-success" href='/login' login to start!
+	- if @current_account
+		a class="btn btn-success" href="/accounts/#{@current_account['username']}/campaigns" Check your campaigns!
+	- else
+		a class="btn btn-success" href='/login' login to start!
