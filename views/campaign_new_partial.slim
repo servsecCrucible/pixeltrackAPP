@@ -1,0 +1,12 @@
+div id="newCampaignModal" class="modal fade" role="dialog"
+  div class="modal-dialog"
+    div class="modal-content"
+      div class="modal-header"
+        h4 New Campaign
+      div class="modal-body"
+        form role="form" action="/accounts/#{@current_account['username']}/campaigns" method='post' id='new-project-form'
+          div class="form-group"
+            label for='label_input' Campaign Label:
+            input type='text' name='label' id='label_input' class="form-control" placeholder="label is required"
+          button type='submit' id='registration-form-submit' class='submit' value='submit' class="btn btn-success" Create
+          button type="button" class="btn btn-default" data-dismiss="modal" Cancel

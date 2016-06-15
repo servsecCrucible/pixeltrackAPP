@@ -1,5 +1,3 @@
-require 'sinatra'
-require 'slim'
 require 'rack/ssl-enforcer'
 require 'secure_headers'
 

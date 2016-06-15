@@ -1,4 +1,8 @@
-h1 Campaigns
+div class="row" style="vertical-align: bottom;"
+  div class="col-xs-9"
+    h3 All Campaigns
+  div class="col-xs-3"
+    button type="button" class="btn btn-success" data-toggle="modal" data-target="#newCampaignModal" + New Campaign
 table class="table"
   thead
     tr
@@ -8,3 +12,5 @@ table class="table"
       tr
         td
           a href="/accounts/#{@current_account['username']}/campaigns/#{camp[:id]}" #{camp[:label]}
+
+include :campaign_new_partial

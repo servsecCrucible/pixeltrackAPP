@@ -11,10 +11,12 @@ gem 'rake'
 gem 'dry-validation'
 gem 'rbnacl-libsodium'
 gem 'rack-ssl-enforcer'
+gem 'secure_headers'
 gem 'rack-flash3'
 
 group :development do
   gem 'rerun'
+  gem 'tux'
 end
 
 group :development, :test do
