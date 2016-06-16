@@ -1,4 +1,6 @@
 script src='/charts.js'
+script src='/highcharts.js'
+script src='/exporting.js'
 
 javascript:
   var visit_set = #{{ JSON.dump(@visits)}};
@@ -12,12 +14,12 @@ row
       a role="button" class="btn btn-info" data-toggle="modal" data-target="#addContributorModal" Contributors
 
 row
-  - @campaign[:tracker_set].each do |tracker|
+  - @campaign[:tracker_set].each_with_index do |tracker,i|
     div class="panel panel-default"
       div class="panel-heading"
         h3 class="panel-title"
           == "#{tracker[:label]}"
-      div class="panel-body"
+      div class="panel-body" id="container#{i}" style="min-width: 310px; height: 400px; margin: 0 auto"
         p We can add some chart here
       div class="panel-footer"
         == "#{tracker[:url]}"
