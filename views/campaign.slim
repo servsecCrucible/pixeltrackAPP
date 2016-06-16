@@ -1,6 +1,11 @@
 script src='/test.js'
 javascript:
-  var all_camps = "#{@campaign}";
+  var obj = new Object();
+  obj.label = "#{@campaign[:label]}";
+  obj.id = "#{@campaign[:id]}";
+  obj.nb_visits = "#{@campaign[:nb_visits]}"
+
+  var all_camps = "#{@campaign[:tracker_set]}";
 row
   .jumbotron
     h3
