@@ -1,0 +1,13 @@
+div id="deleteCampaignModal" class="modal fade" role="dialog"
+  div class="modal-dialog"
+    div class="modal-content"
+      div class="modal-header"
+        h4 Delete Campaign
+      div class="modal-body"
+        form role="form" action="/accounts/#{@current_account['username']}/campaigns/#{@campaign[:id]}/delete" method='post' id='new-project-form'
+          div class="form-group"
+            p
+              Are you sure that you would like to delete #{@campaign[:label]}
+          div class="btn-toolbar"
+            button type='submit' id='registration-form-submit' class='submit' value='submit' class="btn btn-danger" Delete
+            button type="button" class="btn btn-default" data-dismiss="modal" Cancel

@@ -2,9 +2,12 @@ row
   .jumbotron
     h3
       == "#{@campaign[:label]}"
-    div class="btn-toolbar"
-      a role="button" class="btn btn-success" data-toggle="modal" data-target="#newTrackerModal" Add Tracker
-      a role="button" class="btn btn-info" data-toggle="modal" data-target="#addContributorModal" Contributors
+      div class="btn-toolbar"
+        a role="button" class="btn btn-success" data-toggle="modal" data-target="#newTrackerModal" Add Tracker
+        a role="button" class="btn btn-info" data-toggle="modal" data-target="#addContributorModal" Contributors
+        - if @current_account['id'] == @campaign[:owner]['id']
+          a role="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#deleteCampaignModal" Delete
+
 
 row
   - @campaign[:tracker_set].each do |tracker|
@@ -19,3 +22,4 @@ row
 
 include :contributor_new_partial
 include :tracker_new_partial
+include :campaign_delete_partial

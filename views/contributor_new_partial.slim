@@ -2,7 +2,7 @@ div id="addContributorModal" class="modal fade" role="dialog"
   div class="modal-dialog"
     div class="modal-content"
       div class="modal-header"
-        h4 Add Contributor
+        h4 Contributor
       div class="modal-body"
         table class="table"
           thead
@@ -15,9 +15,11 @@ div id="addContributorModal" class="modal fade" role="dialog"
                 td #{contributor[:username]}
                 td #{contributor[:email]}
         form role="form" action="/accounts/#{@current_account['username']}/campaigns/#{@campaign[:id]}/contributors" method='post' id='new-project-form'
-          div class="form-group"
-            label for='email_input' Email address:
-            input type='text' name='email' id='label_input' class="form-control" placeholder="email is required"
+          - if @current_account['id'] == @campaign[:owner]['id']
+            div class="form-group"
+              label for='email_input' Email address:
+              input type='text' name='email' id='label_input' class="form-control" placeholder="email is required"
           div class="btn-toolbar"
-            button type='submit' id='registration-form-submit' class='submit' value='submit' class="btn btn-success" Create
+            - if @current_account['id'] == @campaign[:owner]['id']
+              button type='submit' id='registration-form-submit' class='submit' value='submit' class="btn btn-success" Create
             button type="button" class="btn btn-default" data-dismiss="modal" Cancel

@@ -89,4 +89,27 @@ class PixelTrackApp < Sinatra::Base
 
     redirect back
   end
+
+  post '/accounts/:username/campaigns/:campaign_id/delete/?' do
+    halt_if_incorrect_user(params)
+    campaigns_url = "/accounts/#{@current_account['username']}/campaigns"
+    begin
+      response = DeleteCampaign.call(
+        auth_token: session[:auth_token],
+        owner: @current_account,
+        campaign_id: params[:campaign_id])
+      puts response
+      if response
+        flash[:notice] = 'Campaign removed'
+        redirect campaigns_url
+      else
+        flash[:error] = "Campaign not removed"
+        redirect back
+      end
+    rescue => e
+      flash[:error] = 'Something went wrong -- we will look into it!'
+      logger.error "DEL_CAMPAIGN FAIL: #{e}"
+      redirect back
+    end
+  end
 end
