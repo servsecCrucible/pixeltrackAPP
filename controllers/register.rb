@@ -6,14 +6,15 @@ class PixelTrackApp < Sinatra::Base
     end
 
     post '/register/?' do
-        registration = Registration.call(params)
-        if registration.failure?
-            flash[:error] = 'Please enter a valid username and email'
+        email = Email.call(params)
+        if email.failure?
+            flash[:error] = 'Please enter a valid email'
             redirect '/register'
             halt
         end
         begin
-            EmailRegistrationVerification.call(registration)
+            EmailRegistrationVerification.call(email)
+            flash[:notice] = 'Take a look at your mailbox, our messenger pigeon is coming ASAP!'
             redirect '/'
         rescue => e
             logger.error "FAIL EMAIL: #{e}"
@@ -25,26 +26,32 @@ class PixelTrackApp < Sinatra::Base
 
     get '/register/:token_secure/verify' do
         @token_secure = params[:token_secure]
+        puts @token_secure
         @new_account = SecureMessage.decrypt(@token_secure)
 
         slim :register_confirm
     end
 
     post '/register/:token_secure/verify' do
-        password = Passwords.call(params)
-        if passwords.failure?
-            flash[:error] = passwords.messages.values.join('; ')
+        registration = Registration.call(params)
+        if registration.failure?
+            flash[:error] = registration.messages.values.join('; ')
             redirect "/register/#{params[:token_secure]}/verify"
             halt
         end
 
-        new_account = SecureMessage.decrypt(params[:token_secure])
+        email = SecureMessage.decrypt(params[:token_secure])
         result = CreateVerifiedAccount.call(
-            username: new_account['username'],
-            email: new_account['email'],
+            username: params['username'],
+            email: email['email'],
             password: params['password']
         )
         puts "RESULT: #{result}"
-        result ? redirect('/login') : redirect('/register')
+        if result
+          flash[:notice] = "Let\'s try to loggin with your all new account"
+          redirect('/login')
+        end
+        flash[:error] = "Please try to register again"
+        redirect('/register')
     end
 end

@@ -1,11 +1,10 @@
 require 'pony'
 
 class EmailRegistrationVerification
-  def self.call(username:, email:)
-    registration = { username: username, email: email }
-    token_encrypted = SecureMessage.encrypt(registration)
-
-    Pony.mail(to: registration[:email],
+  def self.call(email:)
+    email = { email: email }
+    token_encrypted = SecureMessage.encrypt(email)
+    Pony.mail(to: email[:email],
               subject: "Your Account is Almost Ready",
               html_body: registration_email(token_encrypted))
   end

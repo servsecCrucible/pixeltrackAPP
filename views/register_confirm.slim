@@ -1,21 +1,21 @@
-h1 Set Your Password
+div class="col-sm-4 col-sm-offset-4"
+  div class="panel panel-primary"
+    div class="panel-heading"
+      h2 class="panel-body" Your Profile
+    div class="panel-body"
+      form action="/register/#{@token_secure}/verify" method='post' id='user-form'
+        div class="form-group"
+          label for='password_input' Username:
+          input type='text' name='username' id='password_input' class="form-control" placeholder="Write your best nickname"
+        div class="form-group"
+          label for='password_input' Email:
+          p class="form-control-static"
+            ==@new_account['email']
+        div class="form-group"
+          label for='password_input' Password:
+          input type='password' name='password' id='password_input' class="form-control" placeholder="Make it secure"
+        div class="form-group"
+          label for='password_confirm_input' Re-enter Password:
+          input type='password' name='password_confirm' id='password_confirm_input' class="form-control" placeholder="We don't want you to forget"
 
-div class="container"
-  div class="row"
-    div class="col-sm-2" Username:
-    div class="col-sm-10"
-      == @new_account['username']
-  div class="row"
-    div class="col-sm-2" Email:
-    div class="col-sm-10"
-      == @new_account['email']
-
-  form action="/register/#{@token_secure}/verify" method='post' id='user-form'
-    div class="form-group"
-      label for='password_input' Password:
-      input type='password' name='password' id='password_input'
-    div class="form-group"
-      label for='password_confirm_input' Re-enter Password:
-      input type='password' name='password_confirm' id='password_confirm_input'
-
-    button type='submit' id='registration-form-submit' class='submit' value='submit' class="btn btn-primary" submit
+        button type='submit' id='registration-form-submit' class='submit' value='submit' class="btn btn-primary" submit
