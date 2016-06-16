@@ -12,6 +12,6 @@ class GetTrackerDetails
   private_class_method
 
   def self.extract_tracker_details(tracker_data)
-    campaign = tracker_data['data']
+    tracker_data['data']['attributes']['visits']
   end
 end

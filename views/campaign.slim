@@ -1,13 +1,8 @@
-script src='/test.js'
+script src='/charts.js'
 
 javascript:
-  var camps = new Object();
   var visit_set = #{{ JSON.dump(@visits)}};
-  camps.label = "#{@campaign[:label]}";
-  camps.id = "#{@campaign[:id]}";
-  camps.nb_visits = "#{@campaign[:nb_visits]}";
-  camps.tracker_set = #{{ JSON.dump(@campaign[:tracker_set])}};
-  var all_camps = "#{@campaign[:tracker_set]}";
+  var campaign_set = #{{ JSON.dump(@campaign)}};
 row
   .jumbotron
     h3
