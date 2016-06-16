@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'sinatra'
 
 class PixelTrackApp < Sinatra::Base
@@ -14,6 +15,13 @@ class PixelTrackApp < Sinatra::Base
       @campaign = GetCampaignDetails.call(campaign_id: params[:campaign_id],
                                           auth_token: session[:auth_token])
       if @campaign
+        @visits = @campaign[:tracker_set].map do |track|
+          {
+            id: track[:id],
+            data: GetTrackerDetails.call(campaign_id: params[:campaign_id],
+                                                tracker_id: track[:id], auth_token: session[:auth_token])
+          }
+        end
         slim(:campaign)
       else
         flash[:error] = 'We cannot find this project in your account'
@@ -37,7 +45,8 @@ class PixelTrackApp < Sinatra::Base
         new_campaign = CreateNewCampaign.call(
           auth_token: session[:auth_token],
           owner: @current_account,
-          new_campaign: new_campaign_data.to_h)
+          new_campaign: new_campaign_data.to_h
+        )
         flash[:notice] = 'Your new campaign has been created! '\
                          ' Now add configurations and invite collaborators.'
         redirect campaigns_url + "/#{new_campaign['id']}"
@@ -61,7 +70,8 @@ class PixelTrackApp < Sinatra::Base
         new_tracker = CreateNewTracker.call(
           auth_token: session[:auth_token],
           campaign_id: params[:campaign_id],
-          new_tracker: new_tracker_data.to_h)
+          new_tracker: new_tracker_data.to_h
+        )
         flash[:notice] = 'Your new tracker has been created! '
         redirect back
       rescue => e
@@ -78,7 +88,8 @@ class PixelTrackApp < Sinatra::Base
     contributor = AddContributorToCampaign.call(
       contributor_email: params[:email],
       campaign_id: params[:campaign_id],
-      auth_token: session[:auth_token])
+      auth_token: session[:auth_token]
+    )
 
     if contributor
       account_info = "#{contributor['username']} (#{contributor['email']})"
