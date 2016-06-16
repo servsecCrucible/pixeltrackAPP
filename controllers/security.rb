@@ -38,7 +38,7 @@ class PixelTrackApp < Sinatra::Base
       connect_src: %w(wws:),
       img_src: %w('self'),
       font_src: %w('self' https://maxcdn.bootstrapcdn.com),
-      script_src: %w('self' https://code.jquery.com https://maxcdn.bootstrapcdn.com),
+      script_src: %w('self' 'unsafe-inline' https://code.jquery.com https://maxcdn.bootstrapcdn.com),
       style_src: %w('self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com https://cdnjs.cloudflare.com),
       form_action: %w('self'),
       frame_ancestors: %w('none'),
