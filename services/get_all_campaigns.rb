@@ -15,7 +15,9 @@ class GetAllCampaigns
     campaigns['data'].map do |camp|
       { id: camp['id'],
         label: camp['attributes']['label'],
-        nb_visits: camp['attributes']['nb_visits']}
+        nb_visits: camp['attributes']['nb_visits'],
+        owner: camp['attributes']['owner']
+      }
     end
   end
 end

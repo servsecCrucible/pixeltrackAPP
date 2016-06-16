@@ -11,7 +11,7 @@ class PixelTrackApp < Sinatra::Base
         credentials = LoginCredentials.call(params)
         if credentials.failure?
             flash[:error] = 'Please enter both your username and password'
-            redirect '/login'
+            redirect back
             halt
         end
 
@@ -25,7 +25,7 @@ class PixelTrackApp < Sinatra::Base
             redirect '/'
         else
             flash[:error] = 'Your username or password did not match our records'
-            slim :login
+            redirect back
         end
     end
 
@@ -33,7 +33,7 @@ class PixelTrackApp < Sinatra::Base
         @current_account = nil
         session[:current_account] = nil
         flash[:notice] = 'You have logged out - please login again to use this site'
-        slim :login
+        redirect '/login'
     end
 
     get '/github_callback/?' do
