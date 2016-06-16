@@ -1,5 +1,9 @@
 .force-wrap {
-  word-wrap:break-word;
-  width:100%;
-  display:block;
+    word-wrap: break-word;
+    width: 100%;
+    display: block;
+}
+.btn-warning {
+    font-size: 10px;
+    border-radius: 6px;
 }

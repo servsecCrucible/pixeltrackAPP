@@ -1,7 +1,7 @@
 script src='/charts.js'
-script src='/highcharts.js'
-script src='/exporting.js'
 script src='/lodash.js'
+script src='/highstock.js'
+script src='/exporting.js'
 
 javascript:
   var visit_set = #{{ JSON.dump(@visits)}};
@@ -24,6 +24,7 @@ row
         p We can add some chart here
       div class="panel-footer"
         == "#{tracker[:url]}"
+        a role="button" id="redraw_chart" class="btn  btn-warning pull-right" Time Series
 
 include :contributor_new_partial
 include :tracker_new_partial
