@@ -1,10 +1,11 @@
 script src='/test.js'
-javascript:
-  var obj = new Object();
-  obj.label = "#{@campaign[:label]}";
-  obj.id = "#{@campaign[:id]}";
-  obj.nb_visits = "#{@campaign[:nb_visits]}"
 
+javascript:
+  var camps = new Object();
+  camps.label = "#{@campaign[:label]}";
+  camps.id = "#{@campaign[:id]}";
+  camps.nb_visits = "#{@campaign[:nb_visits]}";
+  camps.tracker_set = #{{ JSON.dump(@campaign[:tracker_set])}};
   var all_camps = "#{@campaign[:tracker_set]}";
 row
   .jumbotron
