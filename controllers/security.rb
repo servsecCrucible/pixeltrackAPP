@@ -44,7 +44,7 @@ class PixelTrackApp < Sinatra::Base
       frame_ancestors: %w('none'),
       plugin_types: %w('none'),
       block_all_mixed_content: true,
-      upgrade_insecure_requests: false,
+      upgrade_insecure_requests: true,
       report_uri: %w(/report_csp_violation)
     }
   end
