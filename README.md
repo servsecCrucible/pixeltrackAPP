@@ -2,8 +2,6 @@
 
 UI App for Pixeltrack API
 
-![pixel](http://pixeltrack-api.heroku.com/19fbf71b-8e56-4266-843e-829d71818898.png)
-
 ## Install
 
 Install this API by cloning the *relevant branch* and installing required gems:
