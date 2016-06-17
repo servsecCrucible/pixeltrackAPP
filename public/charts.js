@@ -64,41 +64,67 @@ $(function() {
     function setupTimeChart(count, n, dataset) {
         // console.log(dataset);
         _.times(n, function() {
-            // $('#container' + count).empty();
+            $('#container' + count).empty();
             $('#container' + count).highcharts('StockChart', {
-                loading: {
-                    hideDuration: 1000,
-                    showDuration: 1000
+                chart: {
+                    events: {
+                        load: function() {
+
+                            // set up the updating of the chart each second
+                            var series = this.series[0];
+                            setInterval(function() {
+                                var x = (new Date()).getTime(), // current time
+                                    y = Math.round(Math.random() * 10);
+                                series.addPoint([x, y], true, true);
+                            }, 1000);
+                        }
+                    }
                 },
+
                 rangeSelector: {
-                    selected: 1,
-                    inputEnabled: $('#container' + count).width() > 480
+                    buttons: [{
+                        count: 1,
+                        type: 'minute',
+                        text: '1M'
+                    }, {
+                        count: 5,
+                        type: 'minute',
+                        text: '5M'
+                    }, {
+                        type: 'all',
+                        text: 'All'
+                    }],
+                    inputEnabled: false,
+                    selected: 0
                 },
 
-                tooltip: {
-                    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y}</b><br/>',
-                    valueDecimals: 2
-                },
-                colors: ['#4D90FE', '#1BC123'],
                 title: {
-                    text: 'Visits by TIme'
+                    text: 'Live random visit'
                 },
 
-                chart: {},
+                exporting: {
+                    enabled: false
+                },
+
                 series: [{
-                    data: []
+                    name: 'Random visit',
+                    data: (function() {
+                        // generate an array of random data
+                        var data = [],
+                            time = (new Date()).getTime(),
+                            i;
+
+                        for (i = -999; i <= 0; i += 1) {
+                            data.push([
+                                time + i * 1000,
+                                Math.round(Math.random() * 10)
+                            ]);
+                        }
+                        return data;
+                    }())
                 }]
             });
-
-            var sortedData = _.sortBy(dataset, function(num) {
-                return num;
-            });
-            console.log(sortedData);
-            chart = $('#container' + count).highcharts('StockChart');
-            chart.series[0].setData(sortedData);
-            chart.series[0].name = 'yea';
         });
-
     }
 
     function extractVisits(dataset) {
@@ -129,7 +155,7 @@ $(function() {
             return o['date'];
         });
         _.forEach(res.date, function(value, key) {
-            res.push([parseInt(key,10), value]);
+            res.push([parseInt(key, 10), value]);
         })
         return res;
     }
